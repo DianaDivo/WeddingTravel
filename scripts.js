@@ -2,12 +2,16 @@
 (function(){
   const burger = document.querySelector('.burger');
   const drawer = document.getElementById('drawer');
-  const toggle = () => drawer.style.display = drawer.style.display === 'none' || !drawer.style.display ? 'block' : 'none';
+  const toggle = () => {
+    drawer.style.display = drawer.style.display === 'none' || !drawer.style.display ? 'block' : 'none';
+  };
   burger.addEventListener('click', toggle);
-  drawer.addEventListener('click', e => { if(e.target.tagName === 'A') toggle(); });
+  drawer.addEventListener('click', e => {
+    if(e.target.tagName === 'A') toggle();
+  });
 })();
 
-// Smooth scroll
+// Smooth scroll for internal links (compensate sticky header)
 (function(){
   const OFFSET = 70;
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -29,7 +33,7 @@
   window.addEventListener('scroll', ()=>{
     const s = window.scrollY;
     const v = Math.min(1, s/600);
-    media.style.transform = `translateY(${v* -18}px) scale(${1 + v*0.02})`;
+    media.style.transform = `translateY(${v * -18}px) scale(${1 + v * 0.02})`;
   }, { passive: true });
 })();
 
@@ -37,7 +41,10 @@
 (function(){
   const obs = new IntersectionObserver((entries)=>{
     entries.forEach(ent=>{
-      if(ent.isIntersecting){ ent.target.classList.add('in'); obs.unobserve(ent.target); }
+      if(ent.isIntersecting){
+        ent.target.classList.add('in');
+        obs.unobserve(ent.target);
+      }
     });
   }, { threshold: .15 });
   document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
@@ -55,7 +62,7 @@
   const createDots = () => {
     slides.forEach((_, i)=>{
       const d = document.createElement('span');
-      d.className = 'dot' + (i===0?' active':'');
+      d.className = 'dot' + (i===0 ? ' active' : '');
       d.addEventListener('click', ()=> go(i));
       dotsWrap.appendChild(d);
     });
@@ -86,6 +93,7 @@
   const lb = document.getElementById('lightbox');
   const img = lb.querySelector('img');
   const close = lb.querySelector('.close');
+
   links.forEach(a=>{
     a.addEventListener('click', e=>{
       e.preventDefault();
@@ -94,6 +102,7 @@
       lb.classList.add('open');
     });
   });
+
   const hide = ()=> lb.classList.remove('open');
   close.addEventListener('click', hide);
   lb.addEventListener('click', e=> { if(e.target===lb) hide(); });
@@ -107,6 +116,42 @@
     const t = document.createElement('div');
     t.textContent = msg;
     Object.assign(t.style, {
-      position:'fixed', left:'50%', bottom:'24px', transform:'translateX(-50%)',
-      background: ok ? 'linear-gradient(135deg, #6ee7b7, #34d399)' : 'linear-gradient(135deg, #ff6b6b, #ef4444)',
-      color:'#0c0c
+      position:'fixed',
+      left:'50%',
+      bottom:'24px',
+      transform:'translateX(-50%)',
+      background: ok
+        ? 'linear-gradient(135deg, #6ee7b7, #34d399)'
+        : 'linear-gradient(135deg, #ff6b6b, #ef4444)',
+      color:'#0c0c0c',
+      padding:'12px 16px',
+      borderRadius:'10px',
+      boxShadow:'0 10px 30px rgba(0,0,0,.35)',
+      fontWeight:'700',
+      zIndex: 9999
+    });
+    document.body.appendChild(t);
+    setTimeout(()=> t.remove(), 2600);
+  };
+
+  form.addEventListener('submit', e=>{
+    e.preventDefault();
+    let valid = true;
+    ['name','email','destination'].forEach(name=>{
+      const input = form.querySelector(`[name="${name}"]`);
+      const err = form.querySelector(`.error[data-for="${name}"]`);
+      const check = name==='email'
+        ? /^\S+@\S+\.\S+$/.test(input.value.trim())
+        : input.value.trim().length>0;
+      err.style.display = check ? 'none' : 'block';
+      if(!check) valid = false;
+    });
+    if(!valid){
+      toast('Проверьте поля формы', false);
+      return;
+    }
+    // Здесь можно отправить данные на сервер
+    form.reset();
+    toast('Спасибо! Мы свяжемся с вами в течение дня.');
+  });
+})();

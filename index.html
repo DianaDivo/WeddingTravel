@@ -561,3 +561,131 @@
     /* Form */
     form {max-width:500px;margin:40px auto;display:flex;flex-direction:column;gap:15px;}
     input,textarea {padding:10px;border
+                    <!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WeddingTravel — Свадьбы за границей</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {margin:0;font-family:'Inter',sans-serif;background:#0f1116;color:#f4f4f4;line-height:1.6;}
+    header {position:sticky;top:0;background:rgba(15,17,22,0.9);backdrop-filter:blur(8px);padding:16px 32px;display:flex;justify-content:space-between;align-items:center;z-index:1000;}
+    .logo {font-family:'Playfair Display',serif;font-size:24px;color:#e9c080;}
+    nav a {margin-left:24px;color:#ccc;text-decoration:none;font-weight:600;}
+    nav a:hover {color:#fff;}
+    .hero {position:relative;height:90vh;display:flex;align-items:center;justify-content:center;text-align:center;background:url('https://source.unsplash.com/1600x900/?santorini,wedding') center/cover no-repeat;}
+    .hero::after {content:"";position:absolute;inset:0;background:rgba(0,0,0,0.5);}
+    .hero-content {position:relative;z-index:1;max-width:800px;padding:0 20px;}
+    .hero h1 {font-size:48px;font-family:'Playfair Display',serif;margin-bottom:16px;}
+    .hero p {font-size:18px;color:#ccc;margin-bottom:24px;}
+    .btn {background:#e9c080;color:#111;padding:12px 24px;border-radius:8px;font-weight:bold;text-decoration:none;}
+    .reveal {opacity:0;transform:translateY(20px);transition:all 0.6s ease;}
+    .reveal.visible {opacity:1;transform:translateY(0);}
+    /* Slider */
+    .slider {overflow:hidden;position:relative;margin:40px auto;max-width:1000px;}
+    .slides {display:flex;transition:transform 0.5s ease;}
+    .slide {min-width:100%;box-sizing:border-box;position:relative;}
+    .slide img {width:100%;display:block;}
+    .slider button {position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);color:#fff;border:none;padding:10px;cursor:pointer;}
+    .prev {left:10px;}
+    .next {right:10px;}
+    /* Gallery */
+    .gallery {display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;padding:20px;}
+    .gallery img {width:100%;border-radius:8px;cursor:pointer;}
+    .lightbox {display:none;position:fixed;z-index:1000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.9);align-items:center;justify-content:center;}
+    .lightbox img {max-width:90%;max-height:80%;}
+    .lightbox:target {display:flex;}
+    /* Form */
+    form {max-width:500px;margin:40px auto;display:flex;flex-direction:column;gap:15px;}
+    input,textarea {padding:10px;border-radius:6px;border:none;}
+    button[type=submit] {background:#e9c080;color:#111;padding:12px;border:none;border-radius:6px;font-weight:bold;cursor:pointer;}
+    button[type=submit]:hover {background:#d4aa60;}
+    label {display:flex;flex-direction:column;gap:5px;}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">WeddingTravel</div>
+  <nav>
+    <a href="#destinations">Направления</a>
+    <a href="#gallery">Галерея</a>
+    <a href="#contact">Контакты</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="reveal">Свадьба вашей мечты — где бы вы ни были</h1>
+    <p class="reveal">Организуем церемонии за границей и в живописных уголках Беларуси и России</p>
+    <a href="#contact" class="btn reveal">Получить консультацию</a>
+  </div>
+</section>
+
+<section id="destinations">
+  <h2 style="text-align:center;">Популярные направления</h2>
+  <div class="slider">
+    <div class="slides">
+      <div class="slide"><img src="https://source.unsplash.com/1000x600/?santorini" alt="Санторини"></div>
+      <div class="slide"><img src="https://source.unsplash.com/1000x600/?tuscany" alt="Тоскана"></div>
+      <div class="slide"><img src="https://source.unsplash.com/1000x600/?maldives" alt="Мальдивы"></div>
+    </div>
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+</section>
+
+<section id="gallery">
+  <h2 style="text-align:center;">Галерея</h2>
+  <div class="gallery">
+    <a href="#img1"><img src="https://source.unsplash.com/400x300/?wedding,beach" alt=""></a>
+    <a href="#img2"><img src="https://source.unsplash.com/400x300/?wedding,paris" alt=""></a>
+    <a href="#img3"><img src="https://source.unsplash.com/400x300/?wedding,italy" alt=""></a>
+  </div>
+  <div id="img1" class="lightbox"><a href="#"><img src="https://source.unsplash.com/1200x800/?wedding,beach" alt=""></a></div>
+  <div id="img2" class="lightbox"><a href="#"><img src="https://source.unsplash.com/1200x800/?wedding,paris" alt=""></a></div>
+  <div id="img3" class="lightbox"><a href="#"><img src="https://source.unsplash.com/1200x800/?wedding,italy" alt=""></a></div>
+</section>
+
+<section id="contact">
+  <h2 style="text-align:center;">Связаться с нами</h2>
+  <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+    <input type="hidden" name="form-name" value="contact">
+    <p style="display:none">
+      <label>Не заполняйте это поле: <input name="bot-field"></label>
+    </p>
+    <label>Ваше имя:
+      <input type="text" name="name" required>
+    </label>
+    <label>Email:
+      <input type="email" name="email" required>
+    </label>
+    <label>Сообщение:
+      <textarea name="message"></textarea>
+    </label>
+    <button type="submit">Отправить</button>
+  </form>
+</section>
+
+<script>
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const revealOnScroll = () => {
+    for (let el of reveals) {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 100) {
+        el.classList.add('visible');
+      }
+    }
+  };
+  window.addEventListener('scroll', revealOnScroll);
+  window.addEventListener('load', revealOnScroll);
+
+  // Slider
+  const slides = document.querySelector('.slides');
+  const slideCount = document.querySelectorAll('.slide').length;
+  let index = 0;
+  document.querySelector('.next').onclick = () => {
+    index = (index + 1) % slideCount;
+    slides.style.transform = `translateX(-${index * 100}%)`;

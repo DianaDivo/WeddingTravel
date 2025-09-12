@@ -1,157 +1,100 @@
-// Mobile drawer
-(function(){
-  const burger = document.querySelector('.burger');
-  const drawer = document.getElementById('drawer');
-  const toggle = () => {
-    drawer.style.display = drawer.style.display === 'none' || !drawer.style.display ? 'block' : 'none';
-  };
-  burger.addEventListener('click', toggle);
-  drawer.addEventListener('click', e => {
-    if(e.target.tagName === 'A') toggle();
+// Mobile menu toggle
+const burger = document.querySelector('.burger');
+const mobileMenu = document.getElementById('mobileMenu');
+if (burger && mobileMenu) {
+  burger.addEventListener('click', () => {
+    const isHidden = mobileMenu.hasAttribute('hidden');
+    mobileMenu.toggleAttribute('hidden');
+    burger.setAttribute('aria-expanded', String(isHidden));
   });
-})();
-
-// Smooth scroll for internal links (compensate sticky header)
-(function(){
-  const OFFSET = 70;
-  document.querySelectorAll('a[href^="#"]').forEach(a=>{
-    a.addEventListener('click', e=>{
-      const id = a.getAttribute('href').slice(1);
-      if(!id) return;
-      const el = document.getElementById(id);
-      if(!el) return;
-      e.preventDefault();
-      const y = el.getBoundingClientRect().top + window.scrollY - OFFSET;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    });
-  });
-})();
-
-// Parallax hero
-(function(){
-  const media = document.getElementById('hero-media');
-  window.addEventListener('scroll', ()=>{
-    const s = window.scrollY;
-    const v = Math.min(1, s/600);
-    media.style.transform = `translateY(${v * -18}px) scale(${1 + v * 0.02})`;
-  }, { passive: true });
-})();
-
-// Reveal on scroll
-(function(){
-  const obs = new IntersectionObserver((entries)=>{
-    entries.forEach(ent=>{
-      if(ent.isIntersecting){
-        ent.target.classList.add('in');
-        obs.unobserve(ent.target);
-      }
-    });
-  }, { threshold: .15 });
-  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-})();
-
-// Slider
-(function(){
-  const track = document.getElementById('track');
-  const slides = Array.from(track.children);
-  const prev = document.getElementById('prev');
-  const next = document.getElementById('next');
-  const dotsWrap = document.getElementById('dots');
-  let index = 0, timer;
-
-  const createDots = () => {
-    slides.forEach((_, i)=>{
-      const d = document.createElement('span');
-      d.className = 'dot' + (i===0 ? ' active' : '');
-      d.addEventListener('click', ()=> go(i));
-      dotsWrap.appendChild(d);
-    });
-  };
-  const updateDots = () => dotsWrap.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active', i===index));
-  const go = (i)=>{
-    index = (i + slides.length) % slides.length;
-    const x = -index * track.getBoundingClientRect().width * 0.8 - index * 16;
-    track.style.transform = `translateX(${x}px)`;
-    updateDots();
-    restart();
-  };
-  const nextF = ()=> go(index+1);
-  const prevF = ()=> go(index-1);
-  const restart = ()=>{
-    clearInterval(timer);
-    timer = setInterval(nextF, 5000);
-  };
-  createDots(); restart();
-  next.addEventListener('click', nextF);
-  prev.addEventListener('click', prevF);
-  window.addEventListener('resize', ()=> go(index));
-})();
-
-// Lightbox
-(function(){
-  const links = document.querySelectorAll('.lightbox-link');
-  const lb = document.getElementById('lightbox');
-  const img = lb.querySelector('img');
-  const close = lb.querySelector('.close');
-
-  links.forEach(a=>{
-    a.addEventListener('click', e=>{
-      e.preventDefault();
-      img.src = a.href;
-      img.alt = a.querySelector('img')?.alt || 'Фото';
-      lb.classList.add('open');
-    });
-  });
-
-  const hide = ()=> lb.classList.remove('open');
-  close.addEventListener('click', hide);
-  lb.addEventListener('click', e=> { if(e.target===lb) hide(); });
-  window.addEventListener('keydown', e=> { if(e.key==='Escape') hide(); });
-})();
-
-// Form validation + toast
-(function(){
-  const form = document.getElementById('contactForm');
-  const toast = (msg, ok=true)=>{
-    const t = document.createElement('div');
-    t.textContent = msg;
-    Object.assign(t.style, {
-      position:'fixed',
-      left:'50%',
-      bottom:'24px',
-      transform:'translateX(-50%)',
-      background: ok
-        ? 'linear-gradient(135deg, #6ee7b7, #34d399)'
-        : 'linear-gradient(135deg, #ff6b6b, #ef4444)',
-      color:'#0c0c0c',
-      padding:'12px 16px',
-      borderRadius:'10px',
-      boxShadow:'0 10px 30px rgba(0,0,0,.35)',
-      fontWeight:'700',
-      zIndex: 9999
-    });
-    document.body.appendChild(t);
-    setTimeout(()=> t.remove(), 2600);
-  };
-
-  form.addEventListener('submit', e=>{
-    e.preventDefault();
-    let valid = true;
-    ['name','email','destination'].forEach(name=>{
-      const input = form.querySelector(`[name="${name}"]`);
-      const err = form.querySelector(`.error[data-for="${name}"]`);
-      const check = name==='email'
-        ? /^\S+@\S+\.\S+$/.test(input.value.trim())
-        : input.value.trim().length>0;
-      err.style.display = check ? 'none' : 'block';
-      if(!check) valid = false;
-    });
-    if(!valid){
-      toast('Проверьте поля формы', false);
-      return;
+  // Close on link click
+  mobileMenu.addEventListener('click', e => {
+    if (e.target.matches('a')) {
+      mobileMenu.setAttribute('hidden', '');
+      burger.setAttribute('aria-expanded', 'false');
     }
-    // Здесь можно отправить данные на сервер
-    form.reset();
-    toast('Спасибо! Мы свяжемся с вами в течение дня.');
   });
-})();
+}
+
+// Year in footer
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Lazy YouTube embed
+document.querySelectorAll('.video__thumb').forEach(el => {
+  const url = el.dataset.video;
+  const createIframe = () => {
+    const iframe = document.createElement('iframe');
+    iframe.src = url + '?autoplay=1&rel=0';
+    iframe.title = 'Видеоотзыв';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+    iframe.style.border = '0';
+    iframe.width = '100%';
+    iframe.height = '100%';
+    el.replaceWith(iframe);
+  };
+  el.addEventListener('click', createIframe);
+  el.addEventListener('keydown', e => (e.key === 'Enter' || e.key === ' ') && createIframe());
+});
+
+// Calculator logic (примерная оценка диапазона)
+const calcBtn = document.getElementById('calcBtn');
+const calcResult = document.getElementById('calcResult');
+
+function formatCurrency(n){
+  return new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
+}
+
+if (calcBtn) {
+  calcBtn.addEventListener('click', () => {
+    const form = document.querySelector('.calc');
+    const region = form.region.value;
+    const venue = form.venue.value;
+    const guests = Math.max(2, Math.min(200, parseInt(form.guests.value || 0, 10)));
+    const season = form.season.value;
+    const service = form.service.value;
+    const priorities = Array.from(form.querySelectorAll('input[name="priority"]:checked')).map(i=>i.value);
+
+    // Базовые ставки (условные)
+    const regionBase = { europe: 14000, asia: 12000, belarus_russia: 9000, islands: 16000 }[region] || 10000;
+    const venueMod   = { villa: 1.1, winery: 1.15, beach: 1.05, castle: 1.25, loft: 1.0 }[venue] || 1.0;
+    const seasonMod  = { low: 0.95, mid: 1.0, high: 1.12 }[season] || 1.0;
+    const serviceMod = { full: 1.0, coordination: 0.65, partial: 0.8 }[service] || 1.0;
+
+    // Перс‑коэффициенты
+    const guestCost = 120 * guests; // кейтеринг+аренда за гостя (условно)
+    const priorityAdd = priorities.reduce((sum, p) => {
+      const map = { decor: 2500, photo: 1800, catering: 0, music: 1200 };
+      return sum + (map[p] || 0);
+    }, 0);
+
+    let base = regionBase * venueMod * seasonMod * serviceMod + guestCost + priorityAdd;
+
+    // Диапазон: +/- 15% в зависимости от площадки/сезона
+    const low = Math.round(base * 0.85);
+    const high = Math.round(base * 1.15);
+
+    calcResult.innerHTML = `
+      <h3>Ориентировочная смета</h3>
+      <ul>
+        <li><b>Диапазон:</b> ${formatCurrency(low)} — ${formatCurrency(high)}</li>
+        <li><b>Включено:</b> площадка/аренда, базовый декор, координация, фото (частично), логистика</li>
+        <li><b>Зависит от:</b> выбранной локации, даты и состава команды</li>
+      </ul>
+      <p>Для точного расчёта подготовим 2–3 локации с разбивкой бюджета по статьям.</p>
+    `;
+    calcResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+}
+
+// Contact form mock submit
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(contactForm).entries());
+    alert('Спасибо! Мы свяжемся с вами в течение 24 часов.');
+    console.log('Заявка:', data);
+    contactForm.reset();
+  });
+}

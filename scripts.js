@@ -1,20 +1,53 @@
-// Mobile menu toggle
-const burger = document.querySelector('.burger');
-const mobileMenu = document.getElementById('mobileMenu');
-if (burger && mobileMenu) {
-  burger.addEventListener('click', () => {
-    const isHidden = mobileMenu.hasAttribute('hidden');
-    mobileMenu.toggleAttribute('hidden');
-    burger.setAttribute('aria-expanded', String(isHidden));
-  });
-  // Close on link click
+// ===== Улучшенный бургер-меню =====
+document.addEventListener('DOMContentLoaded', () => {
+  const burger = document.querySelector('.burger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const BREAKPOINT = 1024; // ширина, с которой меню всегда видно (десктоп)
+
+  if (!burger || !mobileMenu) return;
+
+  function openMenu() {
+    mobileMenu.classList.add('open');
+    burger.classList.add('active');
+    burger.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('no-scroll');
+  }
+
+  function closeMenu() {
+    mobileMenu.classList.remove('open');
+    burger.classList.remove('active');
+    burger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('no-scroll');
+  }
+
+  function toggleMenu() {
+    mobileMenu.classList.contains('open') ? closeMenu() : openMenu();
+  }
+
+  burger.addEventListener('click', toggleMenu);
+
+  // Закрытие при клике на ссылку
   mobileMenu.addEventListener('click', e => {
-    if (e.target.matches('a')) {
-      mobileMenu.setAttribute('hidden', '');
-      burger.setAttribute('aria-expanded', 'false');
+    if (e.target.matches('a')) closeMenu();
+  });
+
+  // Закрытие при клике вне меню
+  document.addEventListener('click', e => {
+    if (
+      mobileMenu.classList.contains('open') &&
+      !mobileMenu.contains(e.target) &&
+      !burger.contains(e.target)
+    ) {
+      closeMenu();
     }
   });
-}
+
+  // Закрытие при ресайзе на десктоп
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= BREAKPOINT) closeMenu();
+  });
+});
+
 
 // Year in footer
 document.getElementById('year').textContent = new Date().getFullYear();

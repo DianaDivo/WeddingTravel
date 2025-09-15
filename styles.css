@@ -100,3 +100,88 @@ a:hover{opacity:.9}
   .hero h1{font-size:32px}
   .contact-form{grid-template-columns:1fr}
 }
+
+/* ===== Мобильное меню ===== */
+.menu--mobile {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s;
+  z-index: 1000;
+}
+
+.menu--mobile.open {
+  max-height: 500px; /* подбери под свой контент */
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Блокировка прокрутки фона */
+.no-scroll {
+  overflow: hidden;
+}
+
+/* ===== Бургер ===== */
+.burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.burger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #000; /* можешь заменить на свой цвет */
+  margin: 4px auto;
+  transition: all 0.3s ease;
+}
+
+/* Анимация иконки при открытии */
+.burger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.burger.active span:nth-child(2) {
+  opacity: 0;
+}
+.burger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ===== Медиа-запросы ===== */
+
+/* Мобильная версия */
+@media (max-width: 1023px) {
+  .menu {
+    display: none; /* прячем десктопное меню */
+  }
+  .burger {
+    display: flex; /* показываем бургер */
+  }
+}
+
+/* Десктопная версия */
+@media (min-width: 1024px) {
+  .menu {
+    display: flex; /* показываем десктопное меню */
+    gap: 20px;
+  }
+  .menu--mobile {
+    display: none !important; /* полностью убираем мобильное меню */
+  }
+  .burger {
+    display: none; /* прячем бургер */
+  }
+}

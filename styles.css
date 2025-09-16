@@ -140,4 +140,5 @@ a:hover{opacity:.9}
   transform: translateY(0);
 }
 
-.menu--mobile.open a:nth-child(
+.menu--mobile.open a:nth-child(1) { transition-delay: 0.05s; }
+.menu--mobile.open a:nth-child(2) {

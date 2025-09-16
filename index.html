@@ -1,106 +1,488 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Тест бургер-меню</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { margin:0; font-family:sans-serif; }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Свадебное агентство — свадьба за границей и выездные свадьбы под ключ</title>
+  <meta name="description" content="Свадьба за границей и выездные свадьбы в Беларуси и России. Организация под ключ, эстетика, персональные концепции. Посмотрите портфолио и запланируйте свадьбу мечты." />
+  <meta name="keywords" content="свадьба за границей, выездная свадьба Беларусь, свадьба в Европе, организация свадьбы под ключ, свадебное агентство" />
+  <meta name="theme-color" content="#ffffff" />
 
-    header {
-      position:sticky; top:0; background:#fff; border-bottom:1px solid #ddd;
-      display:flex; justify-content:space-between; align-items:center;
-      padding:10px 16px;
-    }
+  <!-- Open Graph -->
+  <meta property="og:title" content="Свадебное агентство — свадьба за границей и выездные свадьбы под ключ" />
+  <meta property="og:description" content="Европа, Азия, Беларусь, Россия. Эстетика, координация и атмосфера вашей мечты." />
+  <meta property="og:type" content="weddingtravel.by" />
+  <meta property="og:image" content="assets/cover.jpg" />
+  <meta property="og:url" content="https://weddingtravel.by" />
 
-    .menu { display:flex; gap:16px; }
-    .menu a { text-decoration:none; color:#333; }
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
 
-    .burger {
-      display:none; flex-direction:column; justify-content:center;
-      width:32px; height:32px; border:0; background:none; cursor:pointer;
-    }
-    .burger span {
-      display:block; width:24px; height:2px; background:#000; margin:4px auto;
-      transition:all .3s ease;
-    }
-    .burger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
-    .burger.active span:nth-child(2) { opacity:0; }
-    .burger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
-
-    /* мобильное меню */
-    .menu--mobile {
-      position:absolute; top:100%; left:0; right:0;
-      background:#fff; border-bottom:1px solid #ddd;
-      max-height:0; overflow:hidden; opacity:0; visibility:hidden;
-      transform:translateY(-10px);
-      transition:max-height .4s ease, opacity .4s ease, visibility .4s ease, transform .4s ease;
-      display:flex; flex-direction:column; gap:8px; padding:0 16px;
-    }
-    .menu--mobile a { padding:12px 0; border-bottom:1px solid #eee; }
-
-    .menu--mobile.open {
-      max-height:500px; opacity:1; visibility:visible; transform:translateY(0);
-    }
-
-    @media (max-width:1023px) {
-      .menu { display:none; }
-      .burger { display:flex; }
-    }
-    @media (min-width:1024px) {
-      .menu--mobile { display:none !important; }
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="styles.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="assets/favicon.png" />
+  
+  <!-- JSON-LD: Organization + LocalBusiness + Website -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://101hotels.com/",
+    "@type": ["Organization","LocalBusiness"],
+    "name": "Ваше свадебное агентство",
+    "url": "https://weddingtravel.by",
+    "logo": "https://weddingtravel.by/assets/logo.svg",
+    "sameAs": ["https://instagram.com/ecopark_aquarelle","https://pinterest.com/pin/564638872032790631"],
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "BY"
+    },
+    "brand": "Ваше свадебное агентство",
+    "areaServed": ["Europe","Asia","Belarus","Russia"],
+    "contactPoint": [{
+      "@type": "ContactPoint",
+      "contactType": "Customer Support",
+      "email": "diana.grodno@gmail.com"
+    }]
+  }
+  </script>
 </head>
 <body>
-  <header>
-    <div class="logo">ЛОГО</div>
-    <nav class="menu">
-      <a href="#">О нас</a>
-      <a href="#">Услуги</a>
-      <a href="#">Контакты</a>
+  <header class="header" id="top">
+    <div class="container nav">
+      <a href="#top" class="logo" aria-label="На главную">
+        <img src="assets/logo.svg" alt="Логотип свадебного агентства" height="36" />
+      </a>
+      <nav class="menu" aria-label="Главное меню">
+        <a href="#about">О нас</a>
+        <a href="#abroad">Свадьбы за рубежом</a>
+        <a href="#local">Выездные свадьбы</a>
+        <a href="#services">Услуги</a>
+        <a href="#portfolio">Портфолио</a>
+        <a href="#reviews">Отзывы</a>
+        <a href="#blog">Блог</a>
+        <a href="#contact" class="btn btn--sm">Запланировать</a>
+      </nav>
+      <button class="burger" aria-label="Открыть меню" aria-controls="mobileMenu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="menu--mobile" id="mobileMenu">
+      <a href="#about">О нас</a>
+      <a href="#abroad">Свадьбы за рубежом</a>
+      <a href="#local">Выездные свадьбы</a>
+      <a href="#services">Услуги</a>
+      <a href="#portfolio">Портфолио</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#blog">Блог</a>
+      <a href="#contact" class="btn btn--sm">Запланировать</a>
     </nav>
-    <button class="burger" aria-controls="mobileMenu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
   </header>
 
-  <nav class="menu--mobile" id="mobileMenu">
-    <a href="#">О нас</a>
-    <a href="#">Услуги</a>
-    <a href="#">Контакты</a>
-  </nav>
+  <main>
+    <!-- Hero -->
+    <section class="hero" aria-label="Главный баннер">
+      <video class="hero__video" autoplay muted loop playsinline poster="assets/cover.jpg">
+        <source src="assets/hero.mp4" type="video/mp4" />
+      </video>
+      <div class="container hero__content">
+        <h1>Ваша история любви — в идеальной декорации</h1>
+        <p>Свадьбы под ключ в Европе, Азии и по живописным локациям Беларуси и России. Стиль, атмосфера и безупречная организация.</p>
+        <div class="hero__cta">
+          <a href="#contact" class="btn">Запланировать свадьбу мечты</a>
+          <a href="#calculator" class="btn btn--ghost">Получить ориентировочную смету</a>
+        </div>
+        <p class="microcopy">Ответим в течение 24 часов — деликатно и по делу.</p>
+      </div>
+    </section>
 
-  <main style="padding:20px">
-    <p>Контент страницы...</p>
+    <!-- Trust -->
+    <section class="trust container">
+      <ul class="kpis">
+        <li><strong>8+ лет</strong><span>опыта</span></li>
+        <li><strong>17 стран</strong><span>и 60+ локаций</span></li>
+        <li><strong>93%</strong><span>клиентов по рекомендациям</span></li>
+        <li><strong>Под ключ</strong><span>прозрачно и точно</span></li>
+      </ul>
+    </section>
+
+    <!-- About -->
+    <section class="container section" id="about">
+      <h2>О нас</h2>
+      <div class="grid-2">
+        <div>
+          <p>Мы создаём свадьбы, которые звучат как вы: без штампов, с характером и вниманием к деталям. Наша задача — снять с вас сложное, чтобы вы прожили момент.</p>
+          <ul class="bullets">
+            <li><b>Фокус:</b> комфорт пары и гостей на каждом этапе</li>
+            <li><b>Подход:</b> концепция → смета → мудборд → локации → команда → идеальный день</li>
+            <li><b>Юридическая поддержка:</b> помощь с легализацией брака за границей</li>
+          </ul>
+          <a href="#contact" class="btn btn--inline">Обсудить вашу концепцию</a>
+        </div>
+        <div class="about__image">
+          <img src="assets/about.jpg" alt="Команда свадебного агентства за работой" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Abroad weddings -->
+    <section class="section section--alt" id="abroad">
+      <div class="container">
+        <h2>Свадьбы за рубежом</h2>
+        <p>Италия, Греция, Франция, Мальдивы, Испания, Португалия, Бали и Таиланд — подберём локацию и создадим атмосферу вашей мечты.</p>
+        <div class="cards">
+          <article class="card">
+            <img src="assets/italy.jpg" alt="Свадьба в Италии: вилла в Тоскане" loading="lazy" />
+            <h3>Италия</h3>
+            <p>Тоскана, Комо, Амальфи — винодельни, виллы и вечера при свечах.</p>
+          </article>
+          <article class="card">
+            <img src="assets/greece.jpg" alt="Свадьба в Греции: белые фасады и море" loading="lazy" />
+            <h3>Греция</h3>
+            <p>Белые фасады, бирюзовое море, минимализм и чистота линий.</p>
+          </article>
+          <article class="card">
+            <img src="assets/france.jpg" alt="Свадьба во Франции: шато и лаванда" loading="lazy" />
+            <h3>Франция</h3>
+            <p>Прованс, Шампань — шато, лаванда и ужины с дегустацией.</p>
+          </article>
+          <article class="card">
+            <img src="assets/maldives.jpg" alt="Свадьба на Мальдивах: церемония на песке" loading="lazy" />
+            <h3>Мальдивы</h3>
+            <p>Уединённые церемонии, океан и мягкая роскошь.</p>
+          </article>
+        </div>
+
+        <div class="packages grid-3">
+          <div class="package">
+            <h4>Bella Notte — Италия</h4>
+            <p>Концепция, локация, декор, флористика, координатор, фото 8 часов, джаз-трио, ужин на 40 гостей.</p>
+          </div>
+          <div class="package">
+            <h4>White & Blue — Греция</h4>
+            <p>Терраса у моря, минималистичный декор, ведение, фото+видео, welcome-бар, шеф-меню.</p>
+          </div>
+          <div class="package">
+            <h4>Luxe Escape — Мальдивы</h4>
+            <p>Уединённая церемония, арка из живых цветов, персональный шеф, романтическая съёмка.</p>
+            </div>
+        </div>
+
+        <a href="#contact" class="btn">Узнать стоимость по вашему направлению</a>
+      </div>
+    </section>
+
+    <!-- Local weddings -->
+    <section class="section" id="local">
+      <div class="container">
+        <h2>Выездные свадьбы в Беларуси и России</h2>
+        <div class="cards">
+          <article class="card">
+            <img src="assets/manor.jpg" alt="Свадьба в усадьбе" loading="lazy" />
+            <h3>Замки и усадьбы</h3>
+            <p>Аутентичная архитектура, сады и балы под кристаллами.</p>
+          </article>
+          <article class="card">
+            <img src="assets/nature.jpg" alt="Свадьба на природе" loading="lazy" />
+            <h3>Природа</h3>
+            <p>Озёра, лесные поляны, панорамы — свобода и воздух.</p>
+          </article>
+          <article class="card">
+            <img src="assets/winery.jpg" alt="Свадьба на винодельне" loading="lazy" />
+            <h3>Винодельни</h3>
+            <p>Лаконичная эстетика, локальная кухня, душевные вечера.</p>
+          </article>
+        </div>
+
+        <div class="cases">
+          <div class="case">
+            <h4>“Лес и свет”</h4>
+            <p>Церемония на поляне, живые струны, ужин под гирляндами, тёплый family‑style.</p>
+          </div>
+          <div class="case">
+            <h4>“Усадьба на закате”</h4>
+            <p>Вертикальная флористика, камерный оркестр, карта вин из местной коллекции.</p>
+          </div>
+          <div class="case">
+            <h4>“Замковый бал”</h4>
+            <p>Чёрно‑белая палитра, свечи, арт‑флористика, танец в галерее с арками.</p>
+          </div>
+        </div>
+
+        <a href="#contact" class="btn">Подобрать локацию под вашу историю</a>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="section section--alt" id="services">
+      <div class="container">
+        <h2>Услуги</h2>
+        <div class="grid-3">
+          <div class="service">
+            <h3>Полная организация</h3>
+            <p>Концепция, смета, подрядчики, логистика, координация — всё под ключ.</p>
+          </div>
+          <div class="service">
+            <h3>Декор и флористика</h3>
+            <p>От мудборда до финальной инсталляции. Смысл в каждой детали.</p>
+          </div>
+          <div class="service">
+            <h3>Фото и видео</h3>
+            <p>Команды со вкусом к свету и кадру — от fashion до документального.</p>
+          </div>
+          <div class="service">
+            <h3>Легализация брака</h3>
+            <p>Консультации, документы, апостили и сопровождение.</p>
+          </div>
+        </div>
+
+        <div class="what-included grid-2">
+          <div>
+            <h4>Что входит</h4>
+            <ul class="bullets">
+              <li><b>Концепция:</b> бриф, мудборды, палитры, сценарий</li>
+              <li><b>Планирование:</b> бюджет, тайминг, логистика</li>
+              <li><b>Продакшн:</b> подрядчики, ТЗ, репетиции</li>
+              <li><b>Координация:</b> куратор в день свадьбы</li>
+              <li><b>Пост‑поддержка:</b> материалы и рекомендации</li>
+            </ul>
+          </div>
+          <div class="cta-box">
+            <p>Хотите персональное предложение под вашу дату и локацию?</p>
+            <a href="#contact" class="btn">Получить персональное предложение</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section class="section" id="portfolio">
+      <div class="container">
+        <h2>Портфолио</h2>
+        <p>Истории пар с реальных проектов — эмоции, детали и атмосфера.</p>
+        <div class="masonry">
+          <img src="assets/p1.jpg" alt="Портфолио: церемония у моря" loading="lazy" />
+          <img src="assets/p2.jpg" alt="Портфолио: ужин в саду" loading="lazy" />
+          <img src="assets/p3.jpg" alt="Портфолио: замок и свечи" loading="lazy" />
+          <img src="assets/p4.jpg" alt="Портфолио: винодельня и закат" loading="lazy" />
+          <img src="assets/p5.jpg" alt="Портфолио: тайный сад" loading="lazy" />
+        </div>
+        <a href="#reviews" class="btn btn--ghost">Посмотреть истории пар</a>
+      </div>
+    </section>
+
+    <!-- Reviews -->
+    <section class="section section--alt" id="reviews">
+      <div class="container">
+        <h2>Отзывы</h2>
+        <div class="reviews">
+          <figure class="review">
+            <blockquote>Мы просто были вместе, а всё остальное происходило правильно. Команда бережно держала наш день в идеальном ритме.</blockquote>
+            <figcaption>Катя и Дима — Тоскана</figcaption>
+          </figure>
+          <figure class="review">
+            <blockquote>Ни одного лишнего движения — только мы, близкие и атмосфера, о которой мечтали.</blockquote>
+            <figcaption>Марина и Антон — Санторини</figcaption>
+          </figure>
+        </div>
+        <div class="video-reviews grid-2">
+          <div class="video">
+            <div class="video__thumb" role="button" tabindex="0" data-video="https://www.youtube.com/watch?v=JUlR2Xo3RS0" aria-label="Смотреть видеоотзыв"></div>
+          </div>
+          <div class="video">
+            <div class="video__thumb" role="button" tabindex="0" data-video="https://www.youtube.com/watch?v=itXcTPWrR20" aria-label="Смотреть видеоотзыв"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calculator -->
+    <section class="section" id="calculator" aria-labelledby="calculator-title">
+      <div class="container">
+        <h2 id="calculator-title">Калькулятор стоимости</h2>
+        <form class="calc grid-3" novalidate>
+          <label>
+            <span>География</span>
+            <select name="region" required>
+              <option value="europe">Европа</option>
+              <option value="asia">Азия</option>
+              <option value="belarus_russia">Беларусь/Россия</option>
+              <option value="islands">Острова</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Тип локации</span>
+            <select name="venue" required>
+              <option value="villa">Вилла/усадьба</option>
+              <option value="winery">Винодельня</option>
+              <option value="beach">Пляж</option>
+              <option value="castle">Замок</option>
+              <option value="loft">Лофт/панорамный зал</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Количество гостей</span>
+            <input type="number" name="guests" min="2" max="200" value="40" required />
+          </label>
+
+          <label>
+            <span>Сезон</span>
+            <select name="season">
+              <option value="low">Низкий</option>
+              <option value="mid">Средний</option>
+              <option value="high">Высокий</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Формат сервиса</span>
+            <select name="service">
+              <option value="full">Полная организация</option>
+              <option value="coordination">Координация дня</option>
+              <option value="partial">Частичный продакшн</option>
+            </select>
+          </label>
+
+          <fieldset class="prefs">
+            <legend>Приоритеты</legend>
+            <label><input type="checkbox" name="priority" value="decor" /> Декор/флористика</label>
+            <label><input type="checkbox" name="priority" value="photo" /> Фото/видео</label>
+            <label><input type="checkbox" name="priority" value="catering" /> Кухня/кейтеринг</label>
+            <label><input type="checkbox" name="priority" value="music" /> Музыка</label>
+          </fieldset>
+
+          <button type="button" class="btn calc__btn" id="calcBtn">Рассчитать</button>
+        </form>
+
+        <div class="calc__result" id="calcResult" aria-live="polite"></div>
+        <div class="calc__cta">
+          <a href="#contact" class="btn">Получить точную смету с подбором локаций</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog -->
+    <section class="section section--alt" id="blog">
+      <div class="container">
+        <h2>Блог</h2>
+        <div class="grid-3 posts">
+          <article class="post">
+            <h3><a href="#">Когда лучше жениться в Италии: погода, сезоны, площадки</a></h3>
+            <p>Практичный гид по регионам, погоде и бюджетам.</p>
+          </article>
+          <article class="post">
+            <h3><a href="#">Легализация брака за границей: пошагово</a></h3>
+            <p>Документы, сроки, апостили и нюансы стран.</p>
+          </article>
+          <article class="post">
+            <h3><a href="#">7 деталей, которые делают свадьбу “вашей”</a></h3>
+            <p>Индивидуальность в сценарии, декоре и тайминге.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social -->
+    <section class="section" id="social">
+      <div class="container">
+        <h2>Мы в соцсетях</h2>
+        <div class="grid-2">
+          <div>
+            <h4>Instagram</h4>
+            <div class="social-embed">
+              <!-- Вставь виджет/скрипт Instagram или сетку превью -->
+              <a class="btn btn--ghost" href="https://instagram.com/ecopark_aquarelle" target="_blank" rel="noopener">Открыть профиль</a>
+            </div>
+          </div>
+          <div>
+            <h4>Pinterest</h4>
+            <div class="social-embed">
+              <!-- Кнопка "Сохранить" и борды -->
+              <a class="btn btn--ghost" href="https://pinterest.com/pin/564638872032790631" target="_blank" rel="noopener">Смотреть подборки</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section section--alt" id="contact">
+      <div class="container">
+        <h2>Контакты</h2>
+        <div class="grid-2">
+          <form class="contact-form" id="contactForm" novalidate>
+            <label>
+              <span>Имя</span>
+              <input type="text" name="name" required />
+            </label>
+            <label>
+              <span>Email</span>
+              <input type="email" name="email" required />
+            </label>
+            <label>
+              <span>Мессенджер</span>
+              <select name="messenger">
+                <option>Telegram</option>
+                <option>WhatsApp</option>
+              </select>
+            </label>
+            <label>
+              <span>Страна/город</span>
+              <input type="text" name="location" />
+            </label>
+            <label>
+              <span>Дата свадьбы</span>
+              <input type="date" name="date" />
+            </label>
+            <label>
+              <span>Бюджет (ориентир)</span>
+              <input type="text" name="budget" placeholder="например, 20 000–40 000" />
+            </label>
+            <label class="full">
+              <span>Расскажите о вас</span>
+              <textarea name="message" rows="4" placeholder="Ваши пожелания, стиль, важные детали"></textarea>
+            </label>
+            <button type="submit" class="btn">Оставить заявку на консультацию</button>
+            <p class="microcopy">Отвечаем в течение 24 часов. Ваши данные не передаются третьим лицам.</p>
+          </form>
+
+          <div class="contacts">
+            <ul class="bullets">
+              <li><b>Email:</b> diana.grodno@gmail.com</li>
+              <li><b>Telegram/WhatsApp:</b> +375 29 580 58 55</li>
+              <li><b>График:</b> Пн–Пт 10:00–19:00</li>
+            </ul>
+            <div class="map-placeholder" aria-label="Карта офиса">Карта/адрес (виджет сюда)</div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const burger = document.querySelector('.burger');
-      const mobileMenu = document.getElementById('mobileMenu');
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <img src="assets/logo.svg" alt="" height="28" />
+        <p>Свадебное агентство — организация свадьбы под ключ: Европа, Азия, Беларусь и Россия.</p>
+      </div>
+      <nav class="footer__nav">
+        <a href="#about">О нас</a>
+        <a href="#abroad">За рубежом</a>
+        <a href="#local">Выездные</a>
+        <a href="#services">Услуги</a>
+        <a href="#portfolio">Портфолио</a>
+        <a href="#reviews">Отзывы</a>
+        <a href="#blog">Блог</a>
+        <a href="#contact">Контакты</a>
+      </nav>
+      <div class="footer__legal">
+        <p>© <span id="year"></span> 2025 weddingtravel</p>
+        <a href="#" rel="nofollow">Политика конфиденциальности</a>
+      </div>
+    </div>
+  </footer>
 
-      function openMenu() {
-        mobileMenu.classList.add('open');
-        burger.classList.add('active');
-        burger.setAttribute('aria-expanded','true');
-        document.body.classList.add('no-scroll');
-      }
-      function closeMenu() {
-        mobileMenu.classList.remove('open');
-        burger.classList.remove('active');
-        burger.setAttribute('aria-expanded','false');
-        document.body.classList.remove('no-scroll');
-      }
-      function toggleMenu() {
-        mobileMenu.classList.contains('open') ? closeMenu() : openMenu();
-      }
-
-      burger.addEventListener('click', toggleMenu);
-      mobileMenu.addEventListener('click', e => {
-        if (e.target.matches('a')) closeMenu();
-      });
-    });
-  </script>
+  <script src="script.js" defer></script>
 </body>
 </html>

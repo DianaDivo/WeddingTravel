@@ -141,4 +141,39 @@ a:hover{opacity:.9}
 }
 
 .menu--mobile.open a:nth-child(1) { transition-delay: 0.05s; }
-.menu--mobile.open a:nth-child(2) {
+.menu--mobile.open a:nth-child(2) { transition-delay: 0.1s; }
+.menu--mobile.open a:nth-child(3) { transition-delay: 0.15s; }
+.menu--mobile.open a:nth-child(4) { transition-delay: 0.2s; }
+.menu--mobile.open a:nth-child(5) { transition-delay: 0.25s; }
+.menu--mobile.open a:nth-child(6) { transition-delay: 0.3s; }
+.menu--mobile.open a:nth-child(7) { transition-delay: 0.35s; }
+.menu--mobile.open a:nth-child(8) { transition-delay: 0.4s; }
+
+/* Блокировка прокрутки фона */
+.no-scroll { overflow: hidden; }
+
+/* Анимация иконки бургера */
+.burger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.burger.active span:nth-child(2) {
+  opacity: 0;
+}
+.burger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+.burger span {
+  transition: all 0.3s ease;
+}
+
+/* ===== Медиа-запросы ===== */
+@media (max-width: 1023px) {
+  .menu { display: none; }
+  .burger { display: flex; }
+}
+
+@media (min-width: 1024px) {
+  .menu { display: flex; gap: 20px; }
+  .menu--mobile { display: none !important; }
+  .burger { display: none; }
+}

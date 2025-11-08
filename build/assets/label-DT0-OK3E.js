@@ -1,6 +1,0 @@
-import{c as p,r as i,j as o,A as f,k as m}from"./index-u9SWEyJT.js";/**
- * @license lucide-react v0.487.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */const b=[["path",{d:"m6 9 6 6 6-6",key:"qrunsl"}]],N=p("chevron-down",b);var v=["a","button","div","form","h2","h3","img","input","label","li","nav","ol","p","select","span","svg","ul"],w=v.reduce((a,e)=>{const t=f(`Primitive.${e}`),r=i.forwardRef((s,l)=>{const{asChild:d,...u}=s,c=d?t:e;return typeof window<"u"&&(window[Symbol.for("radix-ui")]=!0),o.jsx(c,{...u,ref:l})});return r.displayName=`Primitive.${e}`,{...a,[e]:r}},{}),x="Label",n=i.forwardRef((a,e)=>o.jsx(w.label,{...a,ref:e,onMouseDown:t=>{t.target.closest("button, input, select, textarea")||(a.onMouseDown?.(t),!t.defaultPrevented&&t.detail>1&&t.preventDefault())}}));n.displayName=x;var g=n;function h({className:a,...e}){return o.jsx(g,{"data-slot":"label",className:m("flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",a),...e})}export{N as C,h as L};

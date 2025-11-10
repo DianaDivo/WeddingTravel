@@ -7,7 +7,116 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "start": "vite"
+    "start": "vite",
+    
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "tsc --noEmit --watch",
+    
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 50",
+    "lint:fix": "eslint . --ext ts,tsx --fix",
+    "lint:strict": "eslint . --ext ts,tsx --max-warnings 0",
+    
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    
+    "test": "echo \"No tests yet\" && exit 0",
+    "test:watch": "echo \"No tests yet\" && exit 0",
+    "test:coverage": "echo \"No tests yet\" && exit 0",
+    
+    "validate": "npm run type-check && npm run lint && npm run build",
+    "validate:strict": "npm run type-check && npm run lint:strict && npm run build",
+    
+    "clean": "rm -rf node_modules dist .turbo .cache",
+    "clean:build": "rm -rf dist",
+    "clean:modules": "rm -rf node_modules",
+    "reinstall": "npm run clean && npm install",
+    
+    "prepare": "npm run type-check",
+    
+    "deploy": "bash scripts/deploy.sh",
+    "deploy:frontend": "vercel --prod",
+    "deploy:frontend:preview": "vercel",
+    "deploy:supabase": "supabase functions deploy server --no-verify-jwt",
+    "deploy:check": "npm run validate && npm run health-check",
+    
+    "rollback": "bash scripts/rollback.sh",
+    "rollback:frontend": "vercel rollback",
+    
+    "health-check": "bash scripts/health-check.sh",
+    "health:local": "curl -I http://localhost:5173",
+    
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:restart": "supabase stop && supabase start",
+    "supabase:status": "supabase status",
+    "supabase:types": "supabase gen types typescript --local > types/supabase.ts",
+    "supabase:db:push": "supabase db push",
+    "supabase:db:reset": "supabase db reset",
+    "supabase:db:dump": "supabase db dump -f backup.sql",
+    "supabase:functions:serve": "supabase functions serve server",
+    "supabase:functions:deploy": "supabase functions deploy server --no-verify-jwt",
+    "supabase:functions:logs": "supabase functions logs server --follow",
+    "supabase:link": "supabase link --project-ref $SUPABASE_PROJECT_REF",
+    
+    "vercel:login": "vercel login",
+    "vercel:link": "vercel link",
+    "vercel:env": "vercel env pull",
+    "vercel:logs": "vercel logs",
+    "vercel:domains": "vercel domains",
+    
+    "git:pull": "git pull origin main",
+    "git:push": "git push origin main",
+    "git:status": "git status",
+    "git:commit": "git add . && git commit",
+    
+    "release:patch": "npm version patch && git push && git push --tags",
+    "release:minor": "npm version minor && git push && git push --tags",
+    "release:major": "npm version major && git push && git push --tags",
+    
+    "check": "npm run type-check && npm run lint",
+    "check:all": "npm run validate && npm run format:check",
+    
+    "docs:dev": "echo 'Documentation server not configured'",
+    "docs:build": "echo 'Documentation build not configured'",
+    
+    "analyze": "vite build --mode analyze",
+    "analyze:bundle": "npm run build && du -sh dist/*",
+    
+    "update:deps": "npm update",
+    "update:check": "npm outdated",
+    
+    "security:audit": "npm audit",
+    "security:fix": "npm audit fix",
+    "security:check": "npm audit --audit-level=moderate",
+    
+    "ci": "npm run validate",
+    "ci:test": "npm run check && npm run test",
+    
+    "precommit": "npm run check",
+    "prepush": "npm run validate",
+    
+    "info": "npm run supabase:status && vercel --version && node --version && npm --version",
+    "deploy:check": "bash scripts/check-deploy-ready.sh",
+    
+    "docker:dev": "docker-compose up frontend-dev",
+    "docker:dev:build": "docker-compose up --build frontend-dev",
+    "docker:dev:bg": "docker-compose up -d frontend-dev",
+    "docker:prod": "docker-compose -f docker-compose.prod.yml up -d",
+    "docker:prod:build": "docker-compose -f docker-compose.prod.yml up -d --build",
+    "docker:build": "docker-compose build",
+    "docker:build:nocache": "docker-compose build --no-cache",
+    "docker:stop": "docker-compose down",
+    "docker:stop:clean": "docker-compose down -v",
+    "docker:logs": "docker-compose logs -f",
+    "docker:logs:dev": "docker-compose logs -f frontend-dev",
+    "docker:logs:prod": "docker-compose logs -f frontend-prod",
+    "docker:ps": "docker-compose ps",
+    "docker:restart": "docker-compose restart",
+    "docker:clean": "docker-compose down -v && docker system prune -f",
+    "docker:shell": "docker-compose exec frontend-dev sh",
+    "docker:health": "curl -I http://localhost:80/health",
+    
+    "prepare:github": "node prepare-github.js"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -32,6 +141,10 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.0",
+    "eslint": "^8.42.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.0",
+    "prettier": "^3.0.0",
     "typescript": "^5.0.2",
     "vite": "^5.0.0",
     "tailwindcss": "^3.4.0",
@@ -47,5 +160,13 @@
     "свадьба за границей"
   ],
   "author": "WeddingTravel",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/weddingtravel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/weddingtravel/issues"
+  },
+  "homepage": "https://weddingtravel.by"
 }
